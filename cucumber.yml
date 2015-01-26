@@ -1,0 +1,2 @@
+default:  --no-source --format pretty --tags ~@test
+ci:  --no-source --format pretty --tags ~@test
