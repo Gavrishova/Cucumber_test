@@ -6,6 +6,7 @@ module MinitestAssertionsBridge
 end
 
 World MinitestAssertionsBridge
+MultiTest.disable_autorun
 
 Capybara.default_driver = :selenium
 Capybara.default_wait_time = 10
