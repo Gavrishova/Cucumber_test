@@ -1,2 +1,3 @@
 default:  --no-source --format pretty --tags ~@test
 ci:  --no-source --format json -o cucumber.json --tags ~@test
+ci-pretty:  --no-source --format pretty --tags ~@test
