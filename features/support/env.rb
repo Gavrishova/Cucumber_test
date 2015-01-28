@@ -12,10 +12,6 @@ Capybara.default_driver = :selenium
 Capybara.default_wait_time = 10
 Capybara.default_selector = :css
 
-Before do
-  self.assertions = 0
-end
-
 if Capybara.current_driver == :selenium
   require 'headless'
 
@@ -23,6 +19,10 @@ if Capybara.current_driver == :selenium
   headless.start
 end
 
+Before do
+  self.assertions = 0
+  headless.video.start_capture
+end
 
 After do |scenario|
   if scenario.failed? do
@@ -30,6 +30,7 @@ After do |scenario|
     page.driver.save_screenshot(screenshot)
     encoded_img = page.driver.browser.screenshot_as(:base64)
     embed("data:image/png;base64,#{encoded_img}", 'image/png')
+    headless.video.stop_and_save("./report/Fail/FAILED_#{scenario.name.gsub(' ', '_').gsub(/[^0-9A-Za-z_]/, '')}.mov")
   end
   #else
     #screenshot = "./report/Pass/PASSED_#{scenario.name.gsub(' ', '_').gsub(/[^0-9A-Za-z_]/, '')}.png"
