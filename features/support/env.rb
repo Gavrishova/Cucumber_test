@@ -16,6 +16,13 @@ Before do
   self.assertions = 0
 end
 
+if Capybara.current_driver == :selenium
+  require 'headless'
+
+  headless = Headless.new
+  headless.start
+end
+
 
 After do |scenario|
   if scenario.failed? do
@@ -24,7 +31,6 @@ After do |scenario|
     encoded_img = page.driver.browser.screenshot_as(:base64)
     embed("data:image/png;base64,#{encoded_img}", 'image/png')
   end
-#branch for Pass scenario
   #else
     #screenshot = "./report/Pass/PASSED_#{scenario.name.gsub(' ', '_').gsub(/[^0-9A-Za-z_]/, '')}.png"
     #page.driver.save_screenshot(screenshot)
@@ -32,10 +38,11 @@ After do |scenario|
     #embed("data:image/png;base64,#{encoded_img}", 'image/png')
   end
 
-#Capybara.reset_sessions!
+  #Capybara.reset_sessions!
 end
-  Around('@api') do |scenario, block|
-    $test_result = Hash.new
-    block.call
-    puts $test_result.to_s
-  end
+
+Around('@api') do |scenario, block|
+  $test_result = Hash.new
+  block.call
+  puts $test_result.to_s
+end

@@ -13,6 +13,7 @@ gem 'cucumber'
 gem 'pry'
 gem 'jsonpath'
 gem 'json_spec'
+gem 'headless'
 gem 'rspec-core'
 gem 'minitest', '~> 4.0'
 
